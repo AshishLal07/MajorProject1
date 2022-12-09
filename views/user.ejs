@@ -1,6 +1,12 @@
-<html>
-    <head></head>
-    <body>
-        <h1> My name is <%=name%> </h1>
-    </body>
-</html>
+<!-- this is the format for the "Partial file rendering " -->
+<!-- <html> -->
+    <!-- <head></head> -->
+    <!-- <body> -->
+        <!-- <%- include('_header'); -%> -->
+        <!-- <h1> Main project / profile page </h1> -->
+        <!-- <%- include('_footer'); -%> -->
+    <!-- </body> -->
+<!-- </html> -->
+
+<!-- this is the format to follow express-ejs-layout to fill a single layout when follow router path -->
+        <h1> Main project / <%= title %> </h1>

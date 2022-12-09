@@ -4,6 +4,7 @@ module.exports.profile = function(req, res){
 }
 module.exports.name = function(req,res){
     return res.render('user',{
-        name:'ashish'
+        name:'ashish',
+        title:'User profile'
     })
 }

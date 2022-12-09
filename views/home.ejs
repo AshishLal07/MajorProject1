@@ -1,4 +1,5 @@
-<html>
+<!-- this is the format for the "Partial file rendering " -->
+<!-- <html>
     <head>
         <title>
             <%= title %>
@@ -6,6 +7,14 @@
         
     </head>
     <body>
+        <%- include('_header'); -%>
+
         <h1>Main project / <%= title %> </h1>
+
+        <%- include('_footer'); -%>
     </body>
-</html>
+</html> -->
+
+<!-- this is the format to follow express-ejs-layout to fill a single layout when follow router path -->
+
+<h1>Main project / <%= title %> </h1>
