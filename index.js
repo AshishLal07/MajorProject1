@@ -3,6 +3,8 @@ const app = express();
 const port = 8000;
 const expresslayout = require('express-ejs-layouts');
 
+const db = require('./config/mongoose')
+
 //  we put expresslayout earlier to tell every route to follow this layout
 app.use(expresslayout);
 
