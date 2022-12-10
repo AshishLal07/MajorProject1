@@ -6,6 +6,12 @@ const expresslayout = require('express-ejs-layouts');
 //  we put expresslayout earlier to tell every route to follow this layout
 app.use(expresslayout);
 
+// extract style and script from subpages into the layout
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
+
+// for adding static files like css and js
+app.use(express.static('./assets'));
 // app use express router
 app.use('/',require('./routes'))
 
