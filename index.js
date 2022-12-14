@@ -1,10 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
 const expresslayout = require('express-ejs-layouts');
 
+
 const db = require('./config/mongoose')
 
+app.use(bodyParser.urlencoded({extends:false}));
+app.use(cookieParser());
 //  we put expresslayout earlier to tell every route to follow this layout
 app.use(expresslayout);
 

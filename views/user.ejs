@@ -11,3 +11,13 @@
 <!-- this is the format to follow express-ejs-layout to fill a single layout when follow router path -->
     <link rel="stylesheet" href="/css/user_profile.css">        
     <h1> Main project / <%= title %> </h1>
+    <!-- sign up form -->
+    <div id="signUp">
+        <form action="/userId">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="abc@gmail.com">
+            <label for="password" >Password</label>
+            <input type="password" name="password" id="password">
+            <button type="submit">Login</button>
+        </form>
+    </div>
