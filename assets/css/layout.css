@@ -1,4 +1,41 @@
-body{
-    margin: 0;
-    text-align: center;
-}
+#nav-bar {
+  display: flex;
+  justify-content: space-between;
+  background-color: blue; }
+  #nav-bar h3 {
+    display: inline-block;
+    color: white;
+    margin: 10px; }
+  #nav-bar ul {
+    display: inline-block;
+    list-style: none; }
+    #nav-bar ul li {
+      display: inline-block; }
+      #nav-bar ul li a {
+        text-decoration: none;
+        color: white;
+        margin: 5px; }
+
+#footer {
+  display: flex;
+  flex-direction: row;
+  background-color: grey;
+  padding-left: 20px; }
+  #footer p {
+    color: white; }
+  #footer ul {
+    list-style: none; }
+    #footer ul a {
+      text-decoration: none;
+      color: white; }
+
+body {
+  margin: 0; }
+  body #body-content {
+    height: 100%;
+    background-color: peachpuff; }
+    body #body-content h1 {
+      margin: 0;
+      text-align: center; }
+    body #body-content #user-detail {
+      margin: 20px; }

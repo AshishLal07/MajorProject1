@@ -49,7 +49,7 @@ module.exports.createSession = function(req,res){
     return res.redirect('/');
 }
 
-// signout function
+// signout function and logout is inbuilt passport function 
 module.exports.destroySession = function(req,res){
     req.logOut(function(err){
         if(err){console.log('Error while signing out'); return;}

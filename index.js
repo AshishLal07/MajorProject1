@@ -14,6 +14,16 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-stratergis');
 const { Store } = require('express-session');
 const MongoStore = require('connect-mongo');
+const sassMiddleware = require("node-sass-middleware");
+
+// setting up for sass directory to store and convert to css
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
 
 // new version of connect-mongo to store database of mongodb
 const clientP = mongoose.connect(
