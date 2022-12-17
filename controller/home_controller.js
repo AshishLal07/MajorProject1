@@ -23,6 +23,8 @@ module.exports.home = function(req,res){
     //     })
 
     // })
+
+    // populate the User document from mongodb to Post document
     Posts.find({}).populate('User').exec(function(err,post){
         
         return res.render('home',{

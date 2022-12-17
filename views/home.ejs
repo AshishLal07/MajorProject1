@@ -20,12 +20,14 @@
 <h1>Main project / <%= title %> </h1>
 <section id="feed-posts">
     <h4>Posts</h4>
-    <form  id="new-post-form" action="/post/create" method="post">
-        <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...."></textarea>
-        <input type="submit" value="post">
-    </form>
-</section>
-<section id=" posts-display">
+    <% if(locals.user){ %>
+        <form  id="new-post-form" action="/post/create" method="post">
+            <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...."></textarea>
+            <input type="submit" value="post">
+        </form>
+    <%}%>
+    
+    <div id=" posts-display">
         <div id="container">
             <ul class="post-list">
                 <% for(let i of post_list){ %>
@@ -33,8 +35,19 @@
                     <li>
                         <div>User: <%= i.User.name %> </div>
                         <p><%= i.content %></p>
+                        <div class="post-comments-container">
+                            <%if(locals.user){%>
+                                <form id="new-comment-form" action='/comment/create' method="post">
+                                    <Label for="new-comment-content">Comment: </Label>
+                                    <textarea name="content" id="new-comment-content" cols="30" rows="1" placeholder="Type here.."></textarea>
+                                    <input type="hidden" value="<%= i.id %>" name="post">
+                                    <input type="submit" value="Add Comment">
+                                </form>
+                            <%}%>
+                        </div>
                     </li>
                 <%} %>    
             </ul>
         </div>
+</div>
 </section>

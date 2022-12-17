@@ -1,5 +1,6 @@
 const signUp = require('../models/sign_up');
 
+
 module.exports.profile = function(req, res){
     // console.log(req.user);
     return res.render('profile',{
@@ -36,10 +37,10 @@ module.exports.create = function(req,res){
             if(!user){
                 signUp.create(req.body, function(err, newUser){
                     if(err){console.log("error while creating a user account"); return;}
-                    return res.redirect('./sign-in')
+                    return res.redirect('./sign-in');
                 })
             }else{
-                return res.redirect('back')
+                return res.redirect('back');
             }
         });
 
