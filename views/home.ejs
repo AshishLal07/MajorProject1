@@ -20,8 +20,21 @@
 <h1>Main project / <%= title %> </h1>
 <section id="feed-posts">
     <h4>Posts</h4>
-    <form  id="new-post-form" action="/post" method="post">
+    <form  id="new-post-form" action="/post/create" method="post">
         <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...."></textarea>
         <input type="submit" value="post">
     </form>
+</section>
+<section id=" posts-display">
+        <div id="container">
+            <ul class="post-list">
+                <% for(let i of post_list){ %>
+                    
+                    <li>
+                        <div>User: <%= i.User.name %> </div>
+                        <p><%= i.content %></p>
+                    </li>
+                <%} %>    
+            </ul>
+        </div>
 </section>
