@@ -18,3 +18,10 @@
 <!-- **this is the format to follow express-ejs-layout to fill a single layout when follow router path, its jst fill the variable of layout** -->
 
 <h1>Main project / <%= title %> </h1>
+<section id="feed-posts">
+    <h4>Posts</h4>
+    <form  id="new-post-form" action="/post" method="post">
+        <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...."></textarea>
+        <input type="submit" value="post">
+    </form>
+</section>
