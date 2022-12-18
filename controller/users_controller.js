@@ -1,6 +1,5 @@
 const signUp = require('../models/sign_up');
 
-
 module.exports.profile = function(req, res){
     // console.log(req.user);
     return res.render('profile',{

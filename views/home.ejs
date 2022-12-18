@@ -19,35 +19,48 @@
 
 <h1>Main project / <%= title %> </h1>
 <section id="feed-posts">
-    <h4>Posts</h4>
+    
     <% if(locals.user){ %>
+        <h4>Posts</h4>
         <form  id="new-post-form" action="/post/create" method="post">
-            <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...."></textarea>
+            <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...." required ></textarea>
             <input type="submit" value="post">
         </form>
     <%}%>
     
-    <div id=" posts-display">
-        <div id="container">
+   
+        <div id="posts-display-container">
             <ul class="post-list">
-                <% for(let i of post_list){ %>
+                <% for(let i of posts){ %>
                     
                     <li>
-                        <div>User: <%= i.User.name %> </div>
-                        <p><%= i.content %></p>
+                        <p class="user">User: <%= i.User.name %> </p>
+                        <p class="content"><%= i.content %></p>
                         <div class="post-comments-container">
                             <%if(locals.user){%>
                                 <form id="new-comment-form" action='/comment/create' method="post">
                                     <Label for="new-comment-content">Comment: </Label>
-                                    <textarea name="content" id="new-comment-content" cols="30" rows="1" placeholder="Type here.."></textarea>
+                                    <textarea name="content" id="new-comment-content" cols="30" rows="1" placeholder="Type here.." required></textarea>
                                     <input type="hidden" value="<%= i.id %>" name="post">
                                     <input type="submit" value="Add Comment">
                                 </form>
                             <%}%>
+                            <div class="post-comments-list">
+                                <ul id="post-comment-<%=i.id%>">
+                                    <% for(let comment of i.comment){ %>
+                                        <p><%= comment.content %></p>
+                                        <small>
+                                            <%= comment.User.name %>
+                                        </small>
+                                        
+                                        
+                                        <%}%>
+                                </ul>
+
+                            </div>
                         </div>
                     </li>
                 <%} %>    
             </ul>
         </div>
-</div>
 </section>
