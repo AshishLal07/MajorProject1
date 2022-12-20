@@ -1,6 +1,9 @@
 #feed-posts{
     margin:5% ;
-
+    width:60%;
+    height:80% ;
+    display: inline-block;
+    
     & #new-post-form{
         
         & input[type=submit]{
@@ -16,7 +19,8 @@
             list-style: none;
             height: 70%;
             overflow-y: scroll;
-
+            border: 2px solid gray;
+            padding: 0;
             & li{
                 background-color: skyblue;
                 border: 1px solid black;
@@ -43,4 +47,11 @@
             }
         }
     }
+}
+
+
+#user-friends{
+    width: 23%;
+    display: inline-block;
+    vertical-align: top;
 }

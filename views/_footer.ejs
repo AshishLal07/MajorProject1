@@ -3,7 +3,9 @@
         <p> © Coding Ninjas. All Rights Reserved</p>
         <ul>
             <li><a href="/"> Home</a></li>
-            <li><a href="/user/profile"> Profile</a></li>
+            <%if(locals.user){%>
+            <li><a href="/user/profile/<%= locals.user.id %>"> Profile</a></li>
+            <%}%>
         </ul>
     </div>
   

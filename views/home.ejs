@@ -32,44 +32,17 @@
         <div id="posts-display-container">
             <ul class="post-list">
                 <% for(let i of posts){ %>
-                    
-                    <li>
-                        <p class="user">User: <%= i.User.name %> </p>
-                        <% if(locals.user && locals.user.id == i.User.id){ %>
-                            <small> <a href="/post/destroy/<%= i.id %>">Delete</a></small>
-                            <% } %>    
-                        <p class="content"><%= i.content %></p>
-                       
-                        <div class="post-comments-container">
-                            <%if(locals.user){%>
-                                <form id="new-comment-form" action='/comment/create' method="post">
-                                    <Label for="new-comment-content">Comment: </Label>
-                                    <textarea name="content" id="new-comment-content" cols="30" rows="1" placeholder="Type here.." required></textarea>
-                                    <input type="hidden" value="<%= i.id %>" name="post">
-                                    <input type="submit" value="Add Comment">
-                                    
-                                </form>
-                            <%}%>
-                            <div class="post-comments-list">
-                                <ul id="post-comment-<%=i.id%>">
-                                    <% for(let comment of i.comment){ %>
-                                    <li>
-                                        <p><%= comment.content %></p>
-                                        <small>
-                                            <%= comment.User.name %>
-                                        </small>
-                                        <% if(locals.user && locals.user.id == comment.User.id){ %>
-                                            <small> <a href="/comment/destroy/<%= comment.id %>">Delete</a></small>
-                                        <% } %>    
-                                    </li>
-                                    
-                                    <%}%>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </li>
-                <%} %>    
+                    <%- include("_post",{i:i}); -%>
+                <%} %>        
+                
             </ul>
         </div>
+</section>
+<section id="user-friends">
+    <h4> Friends</h4>
+    <% for(friend of all_user){%>
+        <p>
+            <a href="/user/profile/<%= friend.id %>"><%=friend.name%></a>
+        </p>
+    <%}%>
 </section>

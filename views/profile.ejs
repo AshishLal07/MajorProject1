@@ -1,7 +1,19 @@
 <h1> Major project | <%= title %> </h1>
 <div id="user-detail">
-    <h3>UserName: <%=User.name%> </h3>
-    <h3>Email:<%=User.email%></h3>
+   
 </div>
 
- 
+ <% if(user.id == profile_user.id){ %>
+    <div>
+        <h3>UserName: <%=profile_user.name%> </h3>
+        <h3>Email:<%=profile_user.email%></h3>
+    </div>
+    <form action="/user/update/<%= profile_user.id%>" method="post">
+        <Input type="text" name="name" placeholder="Enter yout name" value="<%= profwile_user.name %>"></Input>
+        <Input type="email" name="email" placeholder="Enter yout email" value="<%= profile_user.email %>"></Input>
+        <Input type="submit" value="Update"></Input>
+    </form>
+ <% }else{ %>
+    <h3>UserName: <%=profile_user.name%> </h3>
+    <h3>Email:<%=profile_user.email%></h3>
+ <% } %>

@@ -4,7 +4,9 @@ const router = express.Router();
 
 const user = require('../controller/users_controller');
 
-router.get('/profile',passport.checkAuthentication,user.profile);
+router.get('/profile/:id',passport.checkAuthentication,user.profile);
+router.post('/update/:id',passport.checkAuthentication,user.update);
+
 router.get('/sign-in',user.signIn);
 router.get('/sign-up',user.signUp);
 router.post('/create-userId',user.create);

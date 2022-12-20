@@ -1,0 +1,31 @@
+
+                  
+<li>
+    <p class="user">User: <%= i.User.name %> </p>
+    <% if(locals.user && locals.user.id == i.User.id){ %>
+        <small> <a href="/post/destroy/<%= i.id %>">Delete</a></small>
+        <% } %>    
+    <p class="content"><%= i.content %></p>
+   
+    <div class="post-comments-container">
+        <%if(locals.user){%>
+            <form id="new-comment-form" action='/comment/create' method="post">
+                <Label for="new-comment-content">Comment: </Label>
+                <textarea name="content" id="new-comment-content" cols="30" rows="1" placeholder="Type here.." required></textarea>
+                <input type="hidden" value="<%= i.id %>" name="post">
+                <input type="submit" value="Add Comment">
+                
+            </form>
+        <%}%>
+        <div class="post-comments-list">
+            <ul id="post-comment-<%=i.id%>">
+               
+                <% for(let comment of i.comment){ %>
+                    <%- include('_comment',{i:i}); -%>
+                <%}%>
+          
+            </ul>
+
+        </div>
+    </div>
+</li>

@@ -1,11 +1,15 @@
+const User = require('../models/sign_up');
 const signUp = require('../models/sign_up');
 
 module.exports.profile = function(req, res){
-    // console.log(req.user);
-    return res.render('profile',{
-        User: req.user,
-        title:"profile-page"
+    signUp.findById(req.params.id,function(err,user){
+        return res.render('profile',{
+            title:"profile-page",
+            profile_user: user
+        })
     })
+    // console.log(req.user);
+   
 }
 module.exports.signIn = function(req,res){
     if(req.isAuthenticated()){
@@ -56,6 +60,16 @@ module.exports.destroySession = function(req,res){
         return res.redirect('/');
     });
     
+}
+
+module.exports.update = function(req,res){
+        if(req.user.id == req.params.id){
+            User.findByIdAndUpdate(req.params.id,{name:req.body.name,email:req.body.email},function(err,user){
+                return res.redirect('back');
+            });
+        }else{
+            return res.status(401).send('Unauthorized');
+        }
 }
 
 // signUp.create({
