@@ -2,45 +2,84 @@ const Comments = require('../models/comment');
 const Post = require('../models/Post');
 
 
-module.exports.comment = function(req,res){
+module.exports.comment = async function(req,res){
         // const PostId = req.query.id;
-        Post.findById(req.body.post,function(err,post){
+        try{
+            let post = await Post.findById(req.body.post);
             if(post){
-                Comments.create({
-                    content: req.body.content,
-                    User: res.locals.user._id,
+                let comments = await Comments.create({
+                    content:req.body.content,
+                    User:res.locals.user._id,
                     Post: req.body.post
-                 },function(err,comment){
-                    if(err){console.log("error while adding comment to the database"); return;}
-                    post.comment.push(comment);
+                });
+                if(comments){
+                    post.comment.push(comments);
                     post.save();
-                    res.redirect('/');
-                })
+                }
+               
             }
-        })
+          res.redirect('/')
+        }catch(error){
+
+            console.log("Error",error);
+            return;
+        }
+
+       
        
 }
 
-module.exports.destroy =  function(req,res){
-    Comments.findById(req.params.id, function(err,comment){
-            if(comment.User == req.user.id){
-                let postId = comment.Post;
-                console.log(postId);
-                comment.remove();
-                Post.findByIdAndUpdate(postId,{ $pull : {comment:req.params.id}},function(err,post){
-                  
-                    return res.redirect('/') 
-                });
-            }else{
-                res.redirect('/')
-            }
-    })
+module.exports.destroy = async function(req,res){
+    try {
+
+        let comment = await Comments.findById(req.params.id);
+
+        if(comment.User == req.user.id){
+            let PostId = comment.Post;
+            comment.remove();
+    
+            let post = await Post.findByIdAndUpdate(req.params.id,{$pull: {comment:req.params.id}});
+    
+        }
+        return res.redirect('/') ;
+
+    } catch (error) {
+        console.log("Error",error);
+        return;
+    }
+  
+   
 }
 
-// module.exports.destroy1 = function(req,res){
-//     Post.findById({id:req.query.postId},function(err,post){
-//         if(req.query.id == req.user.id){
+// Less neater version of destroying comment
 
-//         }
-//     })
+// module.exports.destroy1 = async function(req,res){
+//   Comments.findById(req.params.id, function(err,comment){
+    // if(comme  Comments.findById(req.params.id, function(err,comment){nt.User == req.user.id){
+//         let postId = comment.Post;
+//         comment.remove();
+//         Post.findByIdAndUpdate(postId,{ $pull : {comment:req.params.id}},function(err,post){
+          
+//             return res.redirect('/') 
+//         });
+//     }else{
+//         res.redirect('/')
+//     }
+// })
 // }
+// Less neater version for creating the comments
+
+// Post.findById(req.body.post,function(err,post){
+//     if(post){
+//         Comments.create({
+//             content: req.body.content,
+//             User: res.locals.user._id,
+//             Post: req.body.post
+//          },function(err,comment){
+//             if(err){console.log("error while adding comment to the database"); return;}
+//             post.comment.push(comment);
+//             post.save();
+//             res.redirect('/');
+//         })
+//     }
+// })
