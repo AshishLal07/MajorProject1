@@ -12,17 +12,28 @@ module.exports.comment = async function(req,res){
                     User:res.locals.user._id,
                     Post: req.body.post
                 });
+                req.flash("success","Comment is added!");
                 if(comments){
-                    post.comment.push(comments);
+                    post.comment.unshift(comments);
                     post.save();
+                }
+                if(req.xhr){
+                    return res.status(200).json({
+                        data:{
+                            comment : comments,
+                            name: res.locals.user.name,
+                        },
+                        message:'Post uploaded'
+                    })
                 }
                
             }
-          res.redirect('/')
-        }catch(error){
+          return res.redirect('/');
 
+        }catch(error){
+            req.flash("error",error)
             console.log("Error",error);
-            return;
+            return res.redirect('/');
         }
 
        
@@ -37,15 +48,24 @@ module.exports.destroy = async function(req,res){
         if(comment.User == req.user.id){
             let PostId = comment.Post;
             comment.remove();
-    
+            req.flash("success","Comment removed!");
             let post = await Post.findByIdAndUpdate(req.params.id,{$pull: {comment:req.params.id}});
-    
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        comment_id:req.params.id
+                    },
+                    message:"Comment delete"
+                    
+                })
+            }
         }
         return res.redirect('/') ;
 
     } catch (error) {
+        req.flash("error",error)
         console.log("Error",error);
-        return;
+        return res.redirect('/') ;
     }
   
    

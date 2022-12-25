@@ -15,6 +15,8 @@ const passportLocal = require('./config/passport-local-stratergis');
 const { Store } = require('express-session');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require("node-sass-middleware");
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
 
 // setting up for sass directory to store and convert to css
 app.use(sassMiddleware({
@@ -73,6 +75,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMware.setflash);
 // app use express router
 app.use('/',require('./routes'))
 

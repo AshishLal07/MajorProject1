@@ -9,7 +9,7 @@
         <h3>Email:<%=profile_user.email%></h3>
     </div>
     <form action="/user/update/<%= profile_user.id%>" method="post">
-        <Input type="text" name="name" placeholder="Enter yout name" value="<%= profwile_user.name %>"></Input>
+        <Input type="text" name="name" placeholder="Enter yout name" value="<%= profile_user.name %>"></Input>
         <Input type="email" name="email" placeholder="Enter yout email" value="<%= profile_user.email %>"></Input>
         <Input type="submit" value="Update"></Input>
     </form>
