@@ -1,3 +1,4 @@
+// using javaScript to stop reloading pages for every action , Jquery Ajax used to create new way
 {
     // method to submit data for new post using ajax
     let createPost = function(){

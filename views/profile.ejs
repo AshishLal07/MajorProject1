@@ -2,18 +2,23 @@
 <div id="user-detail">
    
 </div>
+<img src="<%= user.avatar %>" alt="<%= user.name %>" width="100px">
+<img class="preview" src="">
 
  <% if(user.id == profile_user.id){ %>
     <div>
         <h3>UserName: <%=profile_user.name%> </h3>
         <h3>Email:<%=profile_user.email%></h3>
     </div>
-    <form action="/user/update/<%= profile_user.id%>" method="post">
+    <form id="Update-profile" action="/user/update/<%= profile_user.id%>" enctype="multipart/form-data" method="post">
         <Input type="text" name="name" placeholder="Enter yout name" value="<%= profile_user.name %>"></Input>
         <Input type="email" name="email" placeholder="Enter yout email" value="<%= profile_user.email %>"></Input>
+        <input type="file" name="avatar" placeholder="Choose file">
         <Input type="submit" value="Update"></Input>
     </form>
  <% }else{ %>
     <h3>UserName: <%=profile_user.name%> </h3>
     <h3>Email:<%=profile_user.email%></h3>
  <% } %>
+
+ <script src="/js/preview_file.js"></script>

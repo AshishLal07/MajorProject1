@@ -46,6 +46,9 @@ app.set('layout extractScripts',true);
 // for adding static files like css and js
 app.use(express.static('./assets'));
 
+// make uploads folder avilable to the browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 
 // set up the view engine
 app.set('view engine','ejs');
