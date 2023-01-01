@@ -11,6 +11,9 @@ router.use('/user',require('./user'));
 router.use('/post',require('./post'));
 router.use('/comment', require('./comment'));
 
+
+router.use('/api', require('./api'))
+
 // for any further router needed to be added accept "/" which is base path
 // router.use('/routerName',require('./routerFileName'));
 
