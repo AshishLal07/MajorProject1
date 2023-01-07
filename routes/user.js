@@ -19,6 +19,11 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/sign-out', user.destroySession);
 
+router.get('/reset_password',user.resetPassword);
+router.post('/reset_password/createToken',user.createToken);
+router.get('/reset_password/:accessToken', user.resetVerification);
+router.post('/reset_password/changePassword/:accessToken',user.changePassword);
+
 router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
 router.get('/auth/google/callback', passport.authenticate('google',{failureRedirect:'/user/sign-in'}),user.createSession)
 

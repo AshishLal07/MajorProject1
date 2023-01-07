@@ -1,7 +1,12 @@
 const User = require('../models/sign_up');
 const signUp = require('../models/sign_up');
+const Reset = require('../models/reset_password');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const resetPasswordWorker = require('../Worker/reset_password_worker')
+const queue = require('../config/kue');
+const resetMailer = require('../mailer/reset_mailer');
 
 
 module.exports.profile = function(req, res){
@@ -129,6 +134,93 @@ module.exports.update = async function(req,res){
             req.flash('error','Unauthorize');
             return res.status(401).send('Unauthorized');
         }
+}
+
+module.exports.resetPassword = async function(req,res){
+    return res.render('reset',{
+        title:"Reset password"
+    });
+}
+module.exports.createToken = async function(req,res){
+
+    try {
+        let user = await User.findOne({email:req.body.email});
+        if(user){
+            // user = await user.populate('User','name email');
+            accessToken = crypto.randomBytes(20).toString('hex');
+            let reset = await Reset.create({
+                accessToken: accessToken,
+                isValid:true,
+                User: user,
+            });
+            console.log(reset);
+            return res.redirect(`/user/reset_password/${reset.accessToken}`);
+// add a mailer to the page
+            //  let job = queue.create('emails',reset).save(function(err){
+            //     if(err){
+            //         console.log("error while adding to queue", err); return;
+            //     }
+            //         console.log("job enqueued",job.id)           
+            //     });
+            //     req.flash("success","Email sent to your email address");
+           
+        }
+        return res.redirect(`back`);
+
+    } catch (error) {
+        console.log('Error while creating a accessToken ',error);
+    }
+   
+
+}
+module.exports.resetVerification = async function(req,res){
+    try{
+        console.log(req.params.accessToken)
+    let reset = await Reset.findOne({accessToken:req.params.accessToken});
+    console.log(reset);
+    if(reset){
+        
+        if(reset.isValid){
+            reset.isValid=false;
+            reset.save();
+            return res.render('new_password',{
+                title:'resetPassword',
+                reset:reset
+            })
+            
+        }else{
+            return res.redirect('/');
+        }
+    }
+
+    }catch(err){
+        console.log("Error while reset password",err);
+        return;
+    }
+   
+}
+
+module.exports.changePassword = async function(req,res){
+
+    try {
+        if(req.body.newpassword == req.body.confirmpassword){
+            let token = await Reset.findOne({accessToken:req.params.accessToken});
+            if(token){
+                let chngUser = await User.findById(token.User._id);
+                chngUser.password = req.body.newpassword;
+                chngUser.save();
+                req.flash('success',"Password change succesfully")
+                return res.redirect('/');
+            }
+        }else{
+            return res.redirect('back');
+        }
+    } catch (error) {
+        
+        console.log('Error while changing password', error);
+    }
+
+        
 }
 
 module.exports.preview = async function(req,res){
