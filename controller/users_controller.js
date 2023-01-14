@@ -209,7 +209,7 @@ module.exports.changePassword = async function(req,res){
                 let chngUser = await User.findById(token.User._id);
                 chngUser.password = req.body.newpassword;
                 chngUser.save();
-                req.flash('success',"Password change succesfully")
+                req.flash('success',"Password change succesfully");
                 return res.redirect('/');
             }
         }else{

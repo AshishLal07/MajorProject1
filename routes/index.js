@@ -10,7 +10,7 @@ router.get('/',homeController.home);
 router.use('/user',require('./user'));
 router.use('/post',require('./post'));
 router.use('/comment', require('./comment'));
-
+router.use('/likes', require('./likes'));
 
 router.use('/api', require('./api'))
 

@@ -17,10 +17,10 @@
                     // deletePost($(' .delete-post-btn', newPost));
                     deletePost($('.delete-post-btn')[0]);
                     notySuccess("Post uploaded");
-                    console.log();
-                    // deletePost($(newPost).find('.delete-post-btn'));
-                    // console.log($(newPost).find('.delete-post-btn'));
                     
+                    // enable toggle like functionality like button on the post
+                    console.log($('.toggle-like-button', newPost)[0]);
+                    new ToggleLikes($('.toggle-like-button')[0]);
                     
                     
                 },
@@ -37,6 +37,9 @@
                     User: ${name }
                     </p>
                     <small> <a class="delete-post-btn" href="/post/destroy/${i._id}">Delete</a>
+                    </small>
+                    <small>
+                         <a class="toggle-like-button" data-likes="${i.Like.length }" href="/likes/toggle/?id=${i._id}&type=Post">0 Likes</a>
                     </small>
                         
                     <p class="content">${i.content}</p>

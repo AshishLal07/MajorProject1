@@ -25,7 +25,12 @@
                         $(`#post-comment-${data.data.comment.Post}`).prepend(newComment);
                         deleteComment($(' .delete-comment-btn',`#post-comment-${data.data.comment.Post}`)[0]);
                         notySuccess("Comment Uploaded!");
-                        console.log( $(' .delete-comment-btn',`#post-comment-${data.data.comment.Post}`));
+                        
+                        // enable toggle like functionality like button on the post
+                        console.log($(' .toggle-like-button', newPost));
+                         new ToggleLikes($(' .toggle-like-button', newPost));
+                        
+                         console.log( $(' .delete-comment-btn',`#post-comment-${data.data.comment.Post}`));
                     },
                     error: function(err){
                         console.log(err.responseText);
@@ -47,7 +52,12 @@
                     </small>
                     <small>
                          <a class="delete-comment-btn" href="/comment/destroy/${ comment._id }">Delete</a>
+                         <a class=like-comment-btn" href="/like/toggle/?id=${comment._id}&type="Post"></a>
+                         
                     </small>  
+                    <small>
+                        <a class="toggle-like-button" data-likes="<% = i.Like.length %>" href="/likes/toggle/?id=<%=i.id%>&type=Post">0 Likes</a>
+                    </small>
                  </li>`
     }
 
@@ -71,6 +81,27 @@
             })
         })
 // 
+    }
+
+    let likeComment = function(likeLink){
+        console.log(likeLink);
+        $(likeLink).click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type:"Post",
+                url:$(likeLink).prop('href'),
+                success:function(data){
+                    let count = Number($(likeLink).firstChild().textContent);
+                    if(data.deleted){
+                        if(count > 0){
+                            $(likeLink).firstChild().textContent = count - 1; 
+                        }
+                    }else{
+                        $(likeLink).firstChild().textContent = count+1;
+                    }
+                }
+            })
+        });
     }
 
     let notySuccess = function(flash){

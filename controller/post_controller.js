@@ -1,6 +1,6 @@
 const Post = require('../models/Post')
 const Comment = require('../models/comment');
-
+const Like = require('../models/like');
 
 module.exports.post = async function(req,res){
    try{
@@ -10,6 +10,8 @@ module.exports.post = async function(req,res){
         });
         // console.log(res.locals.user);
         if(req.xhr){
+            // if we want to populate just the name of the user(we'll not want to send the password in the API), this is how you do it
+            post = await post.populate("User","name");
             return res.status(200).json({
                 data:{
                     post:post,
@@ -37,9 +39,14 @@ module.exports.destroy = async function(req,res){
         let post = await Post.findById(req.params.id);
             console.log(post);
             if(post.User == req.user.id){
+
+                await Like.deleteMany({likeable:post._id,onModel:"Post"});
+                await Like.deleteMany({_id:{$in:post.comment}}) // The $in operator selects the documents where the value of a field equals any value in the specified array
+
                 post.remove();
 
                 await Comment.deleteMany({ Post:req.params.id});
+                
 
                 if(req.xhr){
                     return res.status(200).json({

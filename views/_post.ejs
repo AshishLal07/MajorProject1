@@ -2,9 +2,17 @@
 <li id="post-<%= i.id %>">
     <p class="user">User: <%= i.User.name %> </p>
     <% if(locals.user && locals.user.id == i.User.id){ %>
-        <small> <a class="delete-post-btn" href="/post/destroy/<%= i.id %>">Delete</a></small>
+        <small> <a class="delete-post-btn" href="/post/destroy/<%= i.id %>" >Delete</a></small>
         <% } %>    
     <p class="content"><%= i.content %></p>
+    <small>
+        <%if(locals.user){%>
+            <a class="toggle-like-button" data-likes="<%= i.Like.length %>" href="/likes/toggle/?id=<%= i.id %>&type=Post"> <%= i.Like.length %> Likes</a>
+        <% }else{ %>
+            <%= i.Like.length %> Likes 
+        <% } %>
+    </small>
+
    
     <div class="post-comments-container">
         <%if(locals.user){%>
@@ -16,6 +24,8 @@
                 
             </form>
         <%}%>
+          
+        
         <div class="post-comments-list">
             <ul id="post-comment-<%=i.id%>">
                

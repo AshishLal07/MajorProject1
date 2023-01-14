@@ -7,4 +7,11 @@
     <% if(locals.user && locals.user.id == comment.User.id){ %>
         <small> <a class="delete-comment-btn" href="/comment/destroy/<%= comment.id %>">Delete</a></small>
     <% } %>    
+    <small>
+        <%if(locals.user){%>
+            <a class="toggle-like-button" data-likes="<%= i.Like.length %>" href="/likes/toggle/?id=<%=i.id%>&type=Post">  <%= i.Like.length %> Likes</a>
+        <% }else{ %>
+            <%= i.Like.length %> Likes 
+        <% } %>
+    </small>
 </li>
