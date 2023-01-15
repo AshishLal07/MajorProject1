@@ -1,6 +1,7 @@
 const User = require('../models/sign_up');
 const signUp = require('../models/sign_up');
 const Reset = require('../models/reset_password');
+const FriendShip = require('../models/Friendship');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -223,10 +224,68 @@ module.exports.changePassword = async function(req,res){
         
 }
 
-module.exports.preview = async function(req,res){
-    if(req.user.id == req.params.id){
+module.exports.addFreind = async function(req,res){
+
+    // /addFriend/:freindId
+    console.log(req.user);
+    try {
+
+        if(req.user){
+            let existingFriend = await FriendShip.findOne({
+                from_user:req.user.id,
+                to_user:req.params.friendId
+            });
+            // console.log(user);
+            if(!existingFriend){
+                
+                let userFriend = await FriendShip.create({
+                    from_user: req.user.id,
+                    to_user:req.params.friendId
+                });
+                console.log(userFriend);
+                req.user.Friendship.push(userFriend._id);
+                req.user.save();
+                
+            }
+            req.flash('success','Succesfully added to your friendlist')
+            return res.redirect('/');
+            
+            
+        }
+        
+    } catch (error) {
+        console.log("error while loading the friends",error);
     }
+   
+    
 }
+
+module.exports.removeFriend = async function(req,res){
+    try {
+
+        let user = await User.findById(req.user.id);
+        // console.log(user,req.params.friendShipId);
+        if(user){
+            
+            user.Friendship.pull(req.params.friendShipId);
+            user.save()
+    
+            await FriendShip.deleteOne({_id:req.params.friendShipId});
+        }
+        return res.redirect('/')
+        
+    } catch (error) {
+        console.log("error while removing the friends",error);
+    }
+   
+
+}
+
+
+// module.exports.preview = async function(req,res){
+//     if(req.user.id == req.params.id){
+//     }
+// }
 
 // signUp.create({
     // email: req.body.email,

@@ -19,6 +19,7 @@
  <% }else{ %>
     <h3>UserName: <%=profile_user.name%> </h3>
     <h3>Email:<%=profile_user.email%></h3>
+    <a id="add-friend-button" href="/user/addFriend/<%=profile_user.id%>"> Add friend</a>
  <% } %>
 
  <script src="/js/preview_file.js"></script>

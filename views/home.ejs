@@ -39,12 +39,34 @@
         </div>
 </section>
 <section id="user-friends">
-    <h4> Friends</h4>
-    <% for(friend of all_user){%>
-        <p>
-            <a href="/user/profile/<%= friend.id %>"><%=friend.name%></a>
-        </p>
+    <% if(locals.user){ %>
+        <div id="friends">
+            <h4>Friends</h4>
+            <ul>
+                <% var userFriend = friendship.filter(function(data){%>
+                    <% return data.from_user == locals.user.id ; %>
+                <%})%>
+                
+               <% for(friend of userFriend){ %>
+                    <% let friendName = all_user.filter(function(data){%>
+                        <% return data.id == friend.to_user ; %>
+                    <%})%>
+                    <li> <%= friendName[0].name %> <a href="/user/removeFriend/<%= friend._id%>">remove</a> </li>
+                <%}%>
+            </ul>
+            
+        </div>
     <%}%>
+   
+    <div id="user">
+        <h4> Users</h4>
+        <% for(user of all_user){%>
+            <p>
+                <a href="/user/profile/<%= user.id %>"><%=user.name%></a>
+            </p>
+        <%}%>
+    </div>
+   
 </section>
 
 <script src="/js/post_comment.js"></script>

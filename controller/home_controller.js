@@ -1,7 +1,7 @@
 // module.exports.actionName = function(req,res){}
 const Posts = require('../models/Post');
 const Users = require('../models/sign_up');
-
+const FriendShip = require('../models/Friendship');
 
 // module.exports.home = function(req,res){
 
@@ -43,13 +43,16 @@ module.exports.home = async function(req,res){
                 path:'Like'
             }
         }).populate('Like');
+
         
         let users = await Users.find({});
-
+        let friendship = await FriendShip.find({});
+      
         return res.render('home',{
             title:'Home',
             posts:posts,
-            all_user:users
+            all_user:users,
+            friendship:friendship,
         });
 
     }catch(err){
