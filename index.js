@@ -2,7 +2,8 @@ const express = require('express');
 const env = require('./config/envoirment');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const app = express();
+const app = express();;
+require('./config/views_helper')(app)
 const port = 8000;
 const expresslayout = require('express-ejs-layouts');
 const mongoose  = require('mongoose');
@@ -33,7 +34,7 @@ chatServer.listen(5000,function(){
 const path = require('path');
 const { getLogger } = require('nodemailer/lib/shared');
 
-console.log(env.name);
+
 // setting up for sass directory to store and convert to css
 if(env.name == 'development'){
     app.use(sassMiddleware({
@@ -63,6 +64,7 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 // for adding static files like css and js
 app.use(express.static(env.asset_path));
+
 
 app.use(logger(env.morgan.mode, env.morgan.options))
 

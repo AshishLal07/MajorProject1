@@ -75,9 +75,9 @@
 
   
 
-<script src="/js/post_comment.js"></script>
-<script src="/js/home_posts.js"></script>
-<script src="/js/toggleLike.js"></script>
+<script src="<%= assetPath('js/post_comment.js') %>"></script><%= assetPath() %>
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
+<script src="<%= assetPath('js/toggleLike.js') %>"></script>
 <script>
     $('.toggle-like-button').each(function(){
         let self = this;
@@ -86,7 +86,7 @@
     })
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 <% if(locals.user){%>
     <!-- <%= console.log(locals.user) %> -->
     <script>
