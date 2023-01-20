@@ -11,15 +11,21 @@ passport.use(new LocalStratergy({
     },
     function(req,email,password,done){
     // find a user and establish authentication
-    User.findOne({email:email},function(err,user){
-        if(err){req.flash("error",err); return done(err);};
-        if(!user || user.password != password){ 
-            req.flash("error","Invalid UserName/password");
-            console.log("Invalid UserName/Password"); return done(null,false)};
-        return done(null, user);
-        
+        User.findOne({email:email},function(err,user){
+            if(err){
+                req.flash("error",err); 
+                return done(err);
+            };
+            if(!user || user.password != password){ 
+                req.flash("error","Invalid UserName/password");
+                console.log("Invalid UserName/Password"); 
+                return done(null,false);
+            };
 
-    })
+            return done(null, user);
+            
+
+        })
 }
 
 ));

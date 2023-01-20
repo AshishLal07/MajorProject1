@@ -1,4 +1,6 @@
 const express = require('express');
+const env = require('./config/envoirment');
+const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
@@ -14,20 +16,35 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-stratergis');
 const passportJWT = require('./config/passport-jwt-stratergies');
 const passportGoogle = require('./config/passport-google-oauth2-stratergy');
+
+
 const { Store } = require('express-session');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require("node-sass-middleware");
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
+// setup the chat server to be used with socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_socket').chatSockets(chatServer)
+chatServer.listen(5000,function(){
+    console.log('chat server is listening on port 5000')
+});
+const path = require('path');
+const { getLogger } = require('nodemailer/lib/shared');
+
+console.log(env.name);
 // setting up for sass directory to store and convert to css
-app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
-    debug:true,
-    outputStyle:'extended',
-    prefix:'/css'
-}))
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        src:  path.join(__dirname,env.asset_path,'scss'),
+        dest:  path.join(__dirname,env.asset_path,'css'),
+        debug:true,
+        outputStyle:'extended',
+        prefix:'/css'
+    }));
+}
+
 
 // new version of connect-mongo to store database of mongodb
 const clientP = mongoose.connect(
@@ -44,9 +61,10 @@ app.use(expresslayout);
 // extract style and script from subpages into the layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
-
 // for adding static files like css and js
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
+
+app.use(logger(env.morgan.mode, env.morgan.options))
 
 // make uploads folder avilable to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -56,11 +74,11 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.set('view engine','ejs');
 app.set('views','./views');
 
-// mongo store the session cookie into the database
+// mongo store the ssession cookie into the database
 app.use(session({
     name:'MajorProject',
     // to do change the secret before deployment in production mode
-    secret: 'something',
+    secret: env.session_cookie_key,
     saveUninitialized:false,
     resave:false,
     cookie:{

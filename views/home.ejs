@@ -43,15 +43,19 @@
         <div id="friends">
             <h4>Friends</h4>
             <ul>
+               
                 <% var userFriend = friendship.filter(function(data){%>
-                    <% return data.from_user == locals.user.id ; %>
+                   
+                    <% return data.from_user.toString() == locals.user._id ; %>
                 <%})%>
-                
-               <% for(friend of userFriend){ %>
-                    <% let friendName = all_user.filter(function(data){%>
-                        <% return data.id == friend.to_user ; %>
-                    <%})%>
-                    <li> <%= friendName[0].name %> <a href="/user/removeFriend/<%= friend._id%>">remove</a> </li>
+                <%= console.log(userFriend) %>
+                <% if(userFriend.length > 0){ %>
+                    <% for(friend of userFriend){ %>
+                            <% let friendName = all_user.filter(function(data){%>
+                                <% return data.id == friend.to_user ; %>
+                            <%})%>
+                            <li> <%= friendName[0].name %> <a href="/user/removeFriend/<%= friend._id%>">remove</a> </li>
+                    <%}%>
                 <%}%>
             </ul>
             
@@ -66,8 +70,10 @@
             </p>
         <%}%>
     </div>
-   
+    <%- include('_chat_box') -%>
 </section>
+
+  
 
 <script src="/js/post_comment.js"></script>
 <script src="/js/home_posts.js"></script>
@@ -75,7 +81,16 @@
 <script>
     $('.toggle-like-button').each(function(){
         let self = this;
-        console.log(self);
+        // console.log(self);
         let toggleLike = new ToggleLikes(self);
     })
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+<% if(locals.user){%>
+    <!-- <%= console.log(locals.user) %> -->
+    <script>
+        new chatEngine("user-chat-box",'<%= locals.user.email %>');
+    </script>
+<%}%>
+

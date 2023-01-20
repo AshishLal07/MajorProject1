@@ -1,0 +1,108 @@
+#nav-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: blue;
+}
+#nav-bar h3 {
+  display: inline-block;
+  color: white;
+  margin: 10px;
+}
+#nav-bar ul {
+  display: inline-block;
+  list-style: none;
+}
+#nav-bar ul li {
+  display: inline-block;
+}
+#nav-bar ul li a {
+  text-decoration: none;
+  color: white;
+  margin: 5px;
+}
+
+footer #footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: grey;
+  padding-left: 20px;
+}
+footer #footer p {
+  color: white;
+}
+footer #footer ul {
+  list-style: none;
+}
+footer #footer ul a {
+  text-decoration: none;
+  color: white;
+}
+
+#feed-posts {
+  margin: 5%;
+  width: 60%;
+  height: 80%;
+  display: inline-block;
+}
+#feed-posts #new-post-form input[type=submit] {
+  vertical-align: middle;
+  margin-bottom: 20px;
+}
+#feed-posts #posts-display-container ul {
+  list-style: none;
+  height: 70%;
+  overflow-y: scroll;
+  border: 2px solid gray;
+  padding: 0;
+}
+#feed-posts #posts-display-container ul li {
+  background-color: skyblue;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+#feed-posts #posts-display-container ul li p.user {
+  color: maroon;
+}
+#feed-posts #posts-display-container ul li p.content {
+  color: white;
+  background-color: black;
+}
+#feed-posts #posts-display-container ul li .post-comments-list {
+  border: 1px solid gray;
+  height: 20%;
+}
+#feed-posts #posts-display-container ul li .post-comments-list ul {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+#user-friends {
+  width: 23%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+body {
+  margin: 0;
+}
+body #body-content {
+  height: 100vh;
+  background-color: peachpuff;
+}
+body #body-content h1 {
+  margin: 0;
+  text-align: center;
+}
+body #body-content #user-detail {
+  margin: 20px;
+}
