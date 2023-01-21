@@ -12,15 +12,15 @@ class ToggleLikes{
             
             e.preventDefault();
             let self = this;
-            console.log($(self).attr('href'));
+            // console.log($(self).attr('href'));
             $.ajax({
                 type:'POST',
                 url:$(self).attr('href'),
 
             }).done(function(data){
-                console.log($(self).attr('data-likes'));
+                // console.log($(self).attr('data-likes'));
                 let likesCount = parseInt($(self).attr('data-likes'));
-                console.log(likesCount);
+                // console.log(likesCount);
                 if(data.deleted){
                     likesCount -=1;
                 }else{

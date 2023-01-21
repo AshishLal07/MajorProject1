@@ -227,7 +227,7 @@ module.exports.changePassword = async function(req,res){
 module.exports.addFreind = async function(req,res){
 
     // /addFriend/:freindId
-    console.log(req.user);
+    // console.log(req.user);
     try {
 
         if(req.user){
@@ -242,7 +242,7 @@ module.exports.addFreind = async function(req,res){
                     from_user: req.user.id,
                     to_user:req.params.friendId
                 });
-                console.log(userFriend);
+                // console.log(userFriend);
                 req.user.Friendship.push(userFriend._id);
                 req.user.save();
                 
