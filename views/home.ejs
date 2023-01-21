@@ -19,8 +19,9 @@
 
 <h1>Main project / <%= title %> </h1>
 <section id="feed-posts">
-    
+     
     <% if(locals.user){ %>
+        
         <h4>Posts</h4>
         <form  id="new-post-form" action="/post/create" method="post">
             <textarea name="content" id="new-post-content" cols="30" rows="3" placeholder="type here...." required ></textarea>
@@ -71,11 +72,21 @@
         <%}%>
     </div>
     <%- include('_chat_box') -%>
+   
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
+<% if(locals.user){%>
+    <!-- <%= console.log(curr_user) %> -->
+     <script>
+         new chatEngine("user-chat-box",'<%= curr_user.email %>');
+     </script>
+ <%}%>
+
 
   
 
-<script src="<%= assetPath('js/post_comment.js') %>"></script><%= assetPath() %>
+<script src="<%= assetPath('js/post_comment.js') %>"></script>
 <script src="<%= assetPath('js/home_posts.js') %>"></script>
 <script src="<%= assetPath('js/toggleLike.js') %>"></script>
 <script>
@@ -85,12 +96,6 @@
         let toggleLike = new ToggleLikes(self);
     })
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
-<script src="<%= assetPath('js/chat_engine.js') %>"></script>
-<% if(locals.user){%>
-    <!-- <%= console.log(locals.user) %> -->
-    <script>
-        new chatEngine("user-chat-box",'<%= locals.user.email %>');
-    </script>
-<%}%>
+
+
 

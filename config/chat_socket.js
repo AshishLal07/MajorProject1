@@ -1,5 +1,11 @@
 module.exports.chatSockets = function(socketServer){
-    let io = new require('socket.io')(socketServer);
+    let io = require('socket.io')(socketServer,{
+        cors: {
+          origin: "http://localhost:8000",
+          methods: ["GET", "POST"]
+        }
+      });
+    
     // console.log(socketServer)
 
     // recieve the connection send by client and emit back to the client to the clienthandler

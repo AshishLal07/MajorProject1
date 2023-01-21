@@ -30,7 +30,7 @@ const FriendShip = require('../models/Friendship');
 module.exports.home = async function(req,res){
 
     try{
-
+        
         let posts = await Posts.find({}).
         sort("-createdAt").
         populate('User').
@@ -53,6 +53,7 @@ module.exports.home = async function(req,res){
             posts:posts,
             all_user:users,
             friendship:friendship,
+            curr_user: req.user
         });
 
     }catch(err){

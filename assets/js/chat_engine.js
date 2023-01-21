@@ -3,11 +3,12 @@ class chatEngine{
     constructor(chatBoxId,userEmail){
         this.chatBox = $(`#${chatBoxId}`);
         this.userEmail = userEmail;
-        console.log(this.userEmail)
+        // console.log(this.userEmail)
         
         // sending or emit the connect request 
       
-        this.socket = io.connect('http://localhost:5000');
+        this.socket = io("http://localhost:5000");
+        
 
         if(this.userEmail){
             // console.log(this.socket)
