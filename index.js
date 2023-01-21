@@ -56,7 +56,7 @@ const clientP = mongoose.connect(
   ).then(m => m.connection.getClient());
 
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 //  we put expresslayout earlier to tell every route to follow this layout
 app.use(expresslayout);

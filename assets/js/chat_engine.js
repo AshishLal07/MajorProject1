@@ -7,7 +7,7 @@ class chatEngine{
         
         // sending or emit the connect request 
       
-        this.socket = io("http://localhost:5000");
+        this.socket = io("http://44.201.218.93:5000");
         
 
         if(this.userEmail){
